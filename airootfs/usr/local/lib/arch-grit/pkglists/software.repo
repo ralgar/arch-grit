@@ -13,6 +13,7 @@ firefox
 firewalld
 gamemode
 git
+hdparm
 htop
 lib32-gamemode
 lightdm
@@ -27,6 +28,7 @@ pacman-contrib
 ranger
 realtime-privileges
 reflector
+rsync
 smartmontools
 zsh
 zsh-theme-powerlevel10k
