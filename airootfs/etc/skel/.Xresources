@@ -1,0 +1,57 @@
+! ================================================== !
+! __  __                                             !
+! \ \/ /_ __ ___  ___  ___  _   _ _ __ ___ ___  ___  !
+!  \  /| '__/ _ \/ __|/ _ \| | | | '__/ __/ _ \/ __| !
+!  /  \| | |  __/\__ \ (_) | |_| | | | (_|  __/\__ \ !
+! /_/\_\_|  \___||___/\___/ \__,_|_|  \___\___||___/ !
+! 						     !
+! ================================================== !
+
+! Special
+*.background:       #ffffff
+*.foreground:       #ffffff
+*.accent:           #ffffff
+*.cursorColor:      #eb1540
+
+! black
+*.color0: #263640
+*.color8: #4a697d
+! red
+*.color1: #d12f2c
+*.color9: #fa3935
+! green
+*.color2: #819400
+*.color10: #a4bd00
+! yellow
+*.color3: #b08500
+*.color11: #d9a400
+! blue
+*.color4: #2587cc
+*.color12: #2ca2f5
+! magenta
+*.color5: #696ebf
+*.color13: #c066ff
+! cyan
+*.color6: #289c93
+*.color14: #00e5ff
+! white
+*.color7: #bfbaac
+*.color15: #fdf6e3
+
+Xcursor.size: 16
+
+!  ROFI
+
+rofi.show-icons:            true
+rofi.modi:                  drun,run,window,ssh
+rofi.lines:                 5
+rofi.line-padding:          7
+rofi.matching:              fuzzy
+rofi.bw:                    0
+rofi.padding:               0
+rofi.separator-style:       none
+rofi.hide-scrollbar:        true
+rofi.line-margin:           0
+rofi.font:		    Noto Sans Mono 12	
+!rofi.font:                 Hack 14
+rofi.theme:		    ~/.config/rofi/config.rasi

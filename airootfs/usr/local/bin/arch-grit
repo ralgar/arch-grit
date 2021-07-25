@@ -1,0 +1,130 @@
+#!/bin/bash
+#####################################################################
+###   ARCH-GRIT / ARCH Graphical Recovery and Installation Tool   ###
+#####################################################################
+
+#########################################
+###	  INTERACTIVE FUNCTION SETTINGS   ###
+#########################################
+PRIVILEGE=1 		  # 0 = no setting, 1 = MUST be root, 2 = must NOT be root
+SLEEP_ON_FAIL=0		# 0 = exit with code on fail, 1 = sleep infinitely on fail
+NOTIFY_ON_FAIL=0 	# Using notify-send. 0 = off, 1 = on
+LOG_DIR='/tmp'		# Directory for the log file "$LOG_DIR/$(basename $0).log"
+LOG_LEVEL=0 		  # 0 = Terminal-Only Smart Output (failed commands only)
+#                   1 = Only output from failed commands logged to file
+#                   2 = ALL output logged to file
+
+DEBUG=0			      # 0 = off, 1 = on
+
+#########################################
+###	 VARIABLE AND FUNCTION REFERENCE  ###
+#########################################
+# Text Manipulation:  USAGE: ${var}
+###################################
+#  bld  =  Bold/bright text		|	dim  =  Dim text
+#  und  =  Underlined text		|	bln  =  Blinking text
+#  inv  =  Inverted text (FG/BG)	|	hid  =  Hidden text
+#  red  =  Red text			|	grn  =  Green text
+#  yel  =  Yellow text			|	blu  =  Blue text
+#  pur  =  Purple text			|	cyn  =  Cyan text
+###################################
+# Functions:  USAGE: command [arg]	#  Set the variables FIRST!
+###################################
+#  line_	#  Prints a line-spaced, window-width separator
+#  line_log	#  Same as line_ but fixed length, for log files
+		 #  For BOTH - supply an argument to print 3 lines with message
+
+#  yes_cmd=	#  Variable: Sets command to run if answer is "yes"
+#  no_cmd= 	#  Variable: Sets command to run if answer is "no"
+#  yesorno 	#  Invoke with "Question?" argument to ask Yes or No
+
+#  desc=	#  Variable: Description for smart output from run function
+#  run [cmd]	#  For smart output / error-checking / debugging / logging
+		 #  See "MAIN FUNCTION SETTINGS" above
+
+###################################
+###   Source the main library   ###
+###################################
+. /usr/local/lib/bash/interactive.sh
+
+####################################################################################
+#####	START OF SCRIPT
+####################################################################################
+
+# Triggered when run() function returns non-zero exit status
+onFail() {
+    printf "\n\n[  ${bld}${red}ABORTED${off}  ] The installation was aborted due to an error.\n"
+    printf "              ${bld}${yel}Error logs, for self-diagnosing or bug reporting purposes, are located in [ ${grn}/tmp/arch-grit/${yel} ].${off}\n"
+    printf "              ${bld}${yel}All volumes have been left mounted for debugging.${off}\n\n"
+}
+
+# Triggered when the script exits
+onExit() {
+    printf "The exit trap did a thing!"
+    true
+}
+
+beginInstallation() {
+    if [[ "$@" == *"--default-params"* ]] ; then
+        defaultParams
+    else
+        tuiSetup
+    fi
+
+    . "${libPath}/install.sh"
+}
+
+defaultParams() {
+    # Load pre-installation checks
+    . "${libPath}/tui/00-preInstallation.sh"
+
+    # Set variable defaults
+    export DRIVE=/dev/sda
+    export ROOTSIZE=8
+    export TZ=Canada/Pacific
+    export VDRV='QXL Video'
+    export HNAME=test-host
+    export UNAME=user
+    export UPASS=pass
+    export RPASS=pass
+    export CRYPTPASS=pass
+}
+
+tuiSetup() {
+    . "${libPath}/tui/00-preInstallation.sh"
+    . "${libPath}/tui/10-chooseDisplayDriver.sh"
+    . "${libPath}/tui/20-chooseStorageDevices.sh"
+    . "${libPath}/tui/30-chooseTimezone.sh"
+    . "${libPath}/tui/40-chooseHostname.sh"
+    . "${libPath}/tui/50-setupAccounts.sh"
+    . "${libPath}/tui/99-confirmSettings.sh"
+}
+
+################################
+### COMMAND LINE ARGUMENTS   ###
+################################
+export libPath='/usr/local/lib/arch-grit'
+
+case $1 in
+    install)
+        beginInstallation "${@#install }" ;;
+    decrypt)
+        cryptsetup open /dev/disk/by-partlabel/cryptsystem system || exit 1
+        exit 0 ;;
+    mount)
+        mount -t btrfs \
+            -o subvol=@,defaults,x-mount.mkdir,compress-force=zstd,noatime \
+            LABEL=system /mnt || exit 1
+        exit 0 ;;
+    *)
+        printf "\nInvalid argument [ %s ]. Use [ install ], [ decrypt ] or [ mount ].\n" "${1}"
+        exit 1 ;;
+esac
+
+
+####################################################################################
+#####	END OF SCRIPT - CLEAN EXIT STATUS AND MESSAGE BELOW
+####################################################################################
+printf "\n\n[  ${bld}${grn}FINISHED${off}  ] Succesfully installed Arch Linux!\n"
+printf "               ${bld}${yel}Please reboot and remove the installation media to continue...${off}\n\n"
+exit 0
