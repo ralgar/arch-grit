@@ -20,7 +20,7 @@ rm -rf paru-bin || exit 1
 
 for list in "${libPath:?}"/pkglists/*.aur ; do
     # Install AUR packages from pkglistAUR.txt
-    sudo -u "${UNAME:?}" paru -S --needed --noconfirm - < "$list" || exit 1
+    sudo -u "${UNAME:?}" xargs -a "$list" paru -S --needed --noconfirm || exit 1
 done
 
 # Return user's sudo settings to normal

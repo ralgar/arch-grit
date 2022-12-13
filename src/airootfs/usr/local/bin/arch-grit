@@ -65,7 +65,7 @@ onExit() {
 }
 
 beginInstallation() {
-    if [[ "$@" == *"--default-params"* ]] ; then
+    if [[ "$*" == *"--default-params"* ]] ; then
         defaultParams
     else
         tuiSetup

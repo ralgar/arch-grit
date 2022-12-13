@@ -24,7 +24,6 @@ mountFilesystems() {
     swapSize=$(((($(free -m | grep Mem | awk '{ print $2 }') / 1000) + 1) * 1024))
     truncate -s 0 "$swapFile" || return 1
     chattr +C "$swapFile" || return 1
-    btrfs property set "$swapFile" compression none || return 1
     dd if=/dev/zero of="$swapFile" bs=1M count="$swapSize" || return 1
     chmod 600 "$swapFile" || return 1
     mkswap "$swapFile" || return 1

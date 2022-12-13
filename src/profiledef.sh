@@ -3,7 +3,7 @@
 
 iso_name="arch-grit"
 iso_label="ARCH_GRIT_$(date +%Y%m)"
-iso_publisher="Ryan Algar <https://www.github.com/basschaser/arch-grit>"
+iso_publisher="Ryan Algar <https://www.github.com/ralgar/arch-grit>"
 iso_application="Arch Graphical Recovery and Installation Tool"
 iso_version="$(date +%Y.%m.%d)"
 install_dir="arch"
