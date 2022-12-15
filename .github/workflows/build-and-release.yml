@@ -1,7 +1,7 @@
 ---
 name: Build Arch-GRIT
 
-on:
+on:  # yamllint disable-line rule:truthy
   push:
   pull_request:
     branches:
@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: ghcr.io/${{ github.actor }}/build-env:latest
+          tags: ghcr.io/${{ github.repository }}/build-env:latest
 
   build-iso:
     needs: build-container
@@ -47,7 +47,7 @@ jobs:
         run: >
           docker run --privileged
           -v $PWD:/repo
-          ghcr.io/${{ github.actor }}/build-env:latest
+          ghcr.io/${{ github.repository }}/build-env:latest
 
       - name: Set ISO file variable
         run: echo "iso_file=$(ls out/*.iso)" >> $GITHUB_ENV
@@ -64,7 +64,7 @@ jobs:
           if-no-files-found: error
 
   create-release:
-    if: github.ref == 'refs/heads/master'
+    if: startsWith(github.ref, 'refs/tags/')
     needs: build-iso
     runs-on: ubuntu-latest
     steps:
