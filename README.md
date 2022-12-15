@@ -1,9 +1,9 @@
 # Arch-GRIT
 
 [![Latest Tag](https://img.shields.io/github/v/tag/ralgar/arch-grit?style=for-the-badge&logo=semver&logoColor=white)](https://github.com/ralgar/arch-grit/tags)
-[![Pipeline Status](https://img.shields.io/github/workflow/status/ralgar/arch-grit/Build%20Arch-GRIT/master?label=Pipeline&logo=github&style=for-the-badge)](https://github.com/ralgar/arch-grit/-/pipelines?page=1&scope=all&ref=master)
+[![Pipeline Status](https://img.shields.io/github/workflow/status/ralgar/arch-grit/Build%20Arch-GRIT?label=Pipeline&logo=github&style=for-the-badge)](https://github.com/ralgar/arch-grit/actions)
 [![Software License](https://img.shields.io/badge/License-GPL--2.0-orange?style=for-the-badge&logo=gnu&logoColor=white)](https://www.gnu.org/licenses/gpl-2.0.html)
-[![GitLab Stars](https://img.shields.io/github/stars/ralgar/arch-grit?color=gold&label=Stars&logo=github&style=for-the-badge)](https://github.com/ralgar/arch-grit)
+[![GitHub Stars](https://img.shields.io/github/stars/ralgar/arch-grit?color=gold&label=Stars&logo=github&style=for-the-badge)](https://github.com/ralgar/arch-grit)
 
 Arch Graphical Recovery and Installation Tool.
 
