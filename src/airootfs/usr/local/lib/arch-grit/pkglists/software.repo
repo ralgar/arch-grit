@@ -30,5 +30,7 @@ realtime-privileges
 reflector
 rsync
 smartmontools
+zfs-dkms
+zfs-utils
 zsh
 zsh-theme-powerlevel10k

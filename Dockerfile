@@ -1,7 +1,9 @@
 FROM archlinux:latest
 
-RUN pacman -Syu --noconfirm archiso make
-
 WORKDIR /repo
 
-ENTRYPOINT ["make"]
+RUN pacman -Syu --noconfirm \
+    archiso \
+    make
+
+ENTRYPOINT ["/bin/sh", "-c", "make archiso"]

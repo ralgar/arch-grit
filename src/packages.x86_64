@@ -3,7 +3,6 @@
 ########################################
 amd-ucode
 arch-install-scripts
-#archzfs-linux
 b43-fwcutter
 base
 bind-tools
@@ -38,7 +37,7 @@ jfsutils
 less
 lftp
 libusb-compat
-linux
+linux-lts
 linux-atm
 linux-firmware
 lsscsi
@@ -98,6 +97,8 @@ wpa_supplicant
 wvdial
 xfsprogs
 xl2tpd
+zfs-dkms
+zfs-utils
 zsh
 
 ################################

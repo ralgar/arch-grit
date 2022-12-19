@@ -11,6 +11,7 @@ Type=oneshot
 RemainAfterExit=yes
 ExecStart=/usr/bin/pacman-key --init
 ExecStart=/usr/bin/pacman-key --populate
+ExecStartPost=/usr/bin/pacman-key -a /usr/local/lib/arch-zfs/archzfs.gpg
 
 [Install]
 WantedBy=multi-user.target
