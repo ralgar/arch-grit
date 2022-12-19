@@ -2,16 +2,11 @@
 ### GENERATE THE FSTAB   ###
 ############################
 generateFstab() {
-    # Generate the fstab
-    genfstab -L -p /mnt >> /mnt/etc/fstab || return 1
 
-    # Add fstab entries for swap subvolume and file
-    cat << EOF >> /mnt/etc/fstab || return 1
+    # Configure ZFS on new root
+    zpool set bootfs=zroot/ROOT/default zroot
+    [[ -f /etc/zfs/zpool.cache ]] || zpool set cachefile=/etc/zfs/zpool.cache zroot
+    cp /etc/zfs/zpool.cache /mnt/etc/zfs/zpool.cache
 
-# Swap subvolume (@swap, no compression)
-LABEL=system    /.swap    btrfs    rw,noatime,subvol=@swap    0 0
-
-# Swap file
-/.swap/file     none      swap     defaults,noatime           0 0
-EOF
+    genfstab -f /boot -U /mnt > /mnt/etc/fstab
 }

@@ -8,14 +8,40 @@ formatPartitions() {
     done
     sleep 5
 
-    # Create and open the encrypted LUKS container
-    echo -n "${CRYPTPASS:?}" | cryptsetup luksFormat -d - --align-payload=8192 -s 256 \
-        -c aes-xts-plain64 /dev/disk/by-partlabel/cryptsystem || return 1
-    echo -n "${CRYPTPASS:?}" | cryptsetup open -d - \
-        /dev/disk/by-partlabel/cryptsystem system || return 1
+    modprobe zfs || return 1
 
-    # Format the decrypted LUKS container with btrfs
-    mkfs.btrfs --force --label system /dev/mapper/system || return 1
+    zpool create -f -o ashift=12       \
+             -O acltype=posixacl       \
+             -O atime=off              \
+             -O xattr=sa               \
+             -O dnodesize=legacy       \
+             -O normalization=formD    \
+             -O mountpoint=none        \
+             -O canmount=off           \
+             -O devices=off            \
+             -R /mnt                   \
+             -O compression=lz4        \
+             -O encryption=aes-256-gcm \
+             -O keyformat=passphrase   \
+             -O keylocation=prompt     \
+             zroot /dev/disk/by-partlabel/cryptsystem
+
+    zfs create -o mountpoint=none zroot/ROOT
+    zfs create -o mountpoint=/ -o canmount=noauto zroot/ROOT/default
+
+    zfs create -o mountpoint=none zroot/data
+    zfs create -o mountpoint=/home zroot/data/home
+    zfs create -o mountpoint=/root zroot/data/home/root
+
+    zfs create -o mountpoint=/var -o canmount=off     zroot/var
+    zfs create                                        zroot/var/log
+    zfs create -o mountpoint=/var/lib -o canmount=off zroot/var/lib
+    zfs create                                        zroot/var/lib/containers
+    zfs create                                        zroot/var/lib/docker
+    zfs create                                        zroot/var/lib/libvirt
+
+    # Important: Export the pool
+    zpool export zroot
 
     # Format the BOOT partition to fat32
     if [[ ${BOOTMODE:?} = UEFI ]] ; then
