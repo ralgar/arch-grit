@@ -79,15 +79,15 @@ defaultParams() {
     . "${libPath}/tui/00-preInstallation.sh"
 
     # Set variable defaults
-    export DRIVE=/dev/sda
-    export ROOTSIZE=8
+    export DRIVE=/dev/vda
+    export ROOTSIZE=0
     export TZ=Canada/Pacific
     export VDRV='QXL Video'
     export HNAME=test-host
     export UNAME=user
-    export UPASS=pass
-    export RPASS=pass
-    export CRYPTPASS=pass
+    export UPASS=password
+    export RPASS=password
+    export CRYPTPASS=password
 }
 
 tuiSetup() {
