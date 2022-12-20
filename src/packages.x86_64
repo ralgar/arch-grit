@@ -37,9 +37,10 @@ jfsutils
 less
 lftp
 libusb-compat
-linux-lts
 linux-atm
 linux-firmware
+linux-lts
+linux-lts-headers
 lsscsi
 lvm2
 man-db

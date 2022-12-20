@@ -1,8 +1,8 @@
 base
 base-devel
 linux-firmware
-linux-zen
-linux-zen-headers
+linux-lts
+linux-lts-headers
 man-db
 man-pages
 texinfo
