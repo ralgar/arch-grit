@@ -5,29 +5,32 @@
 [![Software License](https://img.shields.io/badge/License-GPL--2.0-orange?style=for-the-badge&logo=gnu&logoColor=white)](https://www.gnu.org/licenses/gpl-2.0.html)
 [![GitHub Stars](https://img.shields.io/github/stars/ralgar/arch-grit?color=gold&label=Stars&logo=github&style=for-the-badge)](https://github.com/ralgar/arch-grit)
 
-Arch Graphical Recovery and Installation Tool.
+## Overview
+Arch Graphical Recovery and Installation Tool (Arch-GRIT) - a live, graphical
+ Arch Linux ISO, with my custom installer written in Bash.
 
-A live, graphical Arch Linux ISO, with my personal installer written in Bash.
-
-## About The Project
+This is a project with only one goal - easy redeployment of my personal Arch
+ installation. The system is highly opinionated, and primarily designed for
+ power users such as sysadmins and developers.
 
 ![Project Screenshot](images/screenshot.png)
 
-This is a project with only one goal - easy redeployment of my personal Arch installation.<br>
+### Features
 
-Some key points:
-- **Sophisticated installer:** Able to take user input, handle a variety of hardware configurations, and deliver a fully functional system.
-- **Security conscious:** Utilizes Full-Disk Encrytion, firewall, and good practices within the OS itself.
-- **Data integrity:** The installed system uses BTRFS filesystem, with snapshots for easy system recovery. Comes with borg and borgmatic for easy, automatic, encrypted backups.
-- **Graphical environment:** My custom AwesomeWM config, themed to match the terminal colorscheme. GTK and Qt toolkits are using a matching theme to give GUI applications a cohesive look. Heavily keyboard-driven interface.
-- **Terminal environment:** Alacritty terminal for GPU acceleration, Zsh with completions and Powerlevel10k prompt, tmux for organizing workspaces, and a heavily customized instance of Vim. Cohesive colorscheme is applied everywhere.
-
-The system is primarily designed for power users, such as sysadmins and developers.
-
-### Built With
-
-* [Arch Linux](https://archlinux.org)
-* [Archiso](https://github.com/archlinux/archiso)
+- [x] **Live system**
+  - [x] Full graphical environment
+  - [x] High compatibility
+  - [x] Wide variety of useful tools
+- [x] **TUI installer**
+  - [x] Takes user input
+  - [x] Handles a variety of hardware configurations
+  - [x] Delivers a fully functional system
+- [x] **Installed system**
+  - [x] Uses ZFS for data integrity
+  - [x] Dataset encryption by default
+  - [x] Uses smartd for disk health monitoring
+  - [x] Firewalld enabled by default
+  - [x] Follows principle of least privilege
 
 ## Getting Started
 
