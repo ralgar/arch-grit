@@ -7,7 +7,6 @@ systemctl enable cpupower.service || exit 1
 if [[ $SSD = 1 && $TRIM = 1 ]] ; then
 	systemctl enable fstrim.timer || exit 1
 fi
-systemctl enable lightdm-plymouth.service || exit 1
 systemctl enable paccache.timer || exit 1
 systemctl enable smartd.service || exit 1
 
