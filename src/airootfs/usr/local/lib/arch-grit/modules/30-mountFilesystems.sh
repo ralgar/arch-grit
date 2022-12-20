@@ -4,7 +4,7 @@
 mountFilesystems() {
 
     # Important: Re-import the pool after prior export
-    zpool import -d /dev/disk/by-id -R /mnt zroot -N || return 1
+    zpool import -d /dev/disk/by-partlabel -R /mnt zroot -N || return 1
 
     # Manually mount the root dataset because it uses canmount=noauto
     zfs mount zroot/ROOT/default || return 1
