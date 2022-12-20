@@ -21,27 +21,24 @@ formatPartitions() {
              -O devices=off            \
              -R /mnt                   \
              -O compression=lz4        \
-             -O encryption=aes-256-gcm \
-             -O keyformat=passphrase   \
-             -O keylocation=prompt     \
-             zroot /dev/disk/by-partlabel/cryptsystem
+             zroot /dev/disk/by-partlabel/cryptsystem || return 1
 
-    zfs create -o mountpoint=none zroot/ROOT
-    zfs create -o mountpoint=/ -o canmount=noauto zroot/ROOT/default
+    zfs create -o mountpoint=none zroot/ROOT || return 1
+    zfs create -o mountpoint=/ -o canmount=noauto zroot/ROOT/default || return 1
 
-    zfs create -o mountpoint=none zroot/data
-    zfs create -o mountpoint=/home zroot/data/home
-    zfs create -o mountpoint=/root zroot/data/home/root
+    zfs create -o mountpoint=none zroot/data || return 1
+    zfs create -o mountpoint=/home zroot/data/home || return 1
+    zfs create -o mountpoint=/root zroot/data/home/root || return 1
 
-    zfs create -o mountpoint=/var -o canmount=off     zroot/var
-    zfs create                                        zroot/var/log
-    zfs create -o mountpoint=/var/lib -o canmount=off zroot/var/lib
-    zfs create                                        zroot/var/lib/containers
-    zfs create                                        zroot/var/lib/docker
-    zfs create                                        zroot/var/lib/libvirt
+    zfs create -o mountpoint=/var -o canmount=off     zroot/var || return 1
+    zfs create                                        zroot/var/log || return 1
+    zfs create -o mountpoint=/var/lib -o canmount=off zroot/var/lib || return 1
+    zfs create                                        zroot/var/lib/containers || return 1
+    zfs create                                        zroot/var/lib/docker || return 1
+    zfs create                                        zroot/var/lib/libvirt || return 1
 
     # Important: Export the pool
-    zpool export zroot
+    zpool export zroot || return 1
 
     # Format the BOOT partition to fat32
     if [[ ${BOOTMODE:?} = UEFI ]] ; then

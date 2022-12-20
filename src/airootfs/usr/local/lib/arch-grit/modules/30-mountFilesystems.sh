@@ -4,11 +4,11 @@
 mountFilesystems() {
 
     # Important: Re-import the pool after prior export
-    zpool import -d /dev/disk/by-id -R /mnt zroot -N
+    zpool import -d /dev/disk/by-id -R /mnt zroot -N || return 1
 
     # Manually mount the root dataset because it uses canmount=noauto
-    zfs mount zroot/ROOT/default
-    zfs mount -a
+    zfs mount zroot/ROOT/default || return 1
+    zfs mount -a || return 1
 
     # Mount the boot partition
     mkdir /mnt/boot || return 1
