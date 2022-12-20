@@ -17,17 +17,5 @@ useradd -m -G wheel -s /usr/bin/zsh "${UNAME:?}" || exit 1
 echo "${UNAME:?}":"${UPASS:?}" | chpasswd || exit 1
 echo "${UNAME:?} ALL=(ALL) ALL" > /etc/sudoers.d/"${UNAME:?}" || exit 1
 
-# For ultimate installation, create btrfs subvolumes in user's home directory
-sudo -u "${UNAME:?}" btrfs subvolume create /home/"${UNAME:?}"/.cache || exit 1
-sudo -u "${UNAME:?}" btrfs subvolume create /home/"${UNAME:?}"/.local || exit 1
-sudo -u "${UNAME:?}" btrfs subvolume create /home/"${UNAME:?}"/Downloads || exit 1
-
-# Install dotfiles
-sudo -u "${UNAME:?}" \
-    git clone https://github.com/basschaser/dotfiles.git \
-    "/home/${UNAME:?}/dotfiles" || exit 1
-sudo -u "${UNAME:?}" "/home/${UNAME:?}/dotfiles/install.sh" || exit 1
-rm -rf "/home/${UNAME:?}/dotfiles" || exit 1
-
 
 exit 0
