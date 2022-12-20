@@ -12,18 +12,21 @@ formatPartitions() {
 
     # autotrim=on
 
-    zpool create -f -o ashift=12       \
-             -O acltype=posixacl       \
-             -O atime=off              \
-             -O xattr=sa               \
-             -O dnodesize=legacy       \
-             -O normalization=formD    \
-             -O mountpoint=none        \
-             -O canmount=off           \
-             -O devices=off            \
-             -R /mnt                   \
-             -O compression=lz4        \
-             zroot /dev/disk/by-partlabel/cryptsystem || return 1
+    zpool create -f -o ashift=12  \
+        -O acltype=posixacl       \
+        -O atime=off              \
+        -O xattr=sa               \
+        -O dnodesize=legacy       \
+        -O normalization=formD    \
+        -O mountpoint=none        \
+        -O canmount=off           \
+        -O devices=off            \
+        -O compression=lz4        \
+        -O encryption=aes-256-gcm \
+        -O keyformat=passphrase   \
+        -O keylocation=prompt     \
+        -R /mnt                   \
+        zroot /dev/disk/by-partlabel/cryptsystem <<<"${CRYPTPASS:?}" || return 1
 
     zfs create -o mountpoint=none zroot/ROOT || return 1
     zfs create -o mountpoint=/ -o canmount=noauto zroot/ROOT/default || return 1
