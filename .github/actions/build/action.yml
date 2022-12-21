@@ -15,6 +15,11 @@ runs:
       run: docker build -t ${{ github.repository }}:latest $(pwd)
       shell: bash
 
+    # This avoids permissions issues later on
+    - name: Create out directory
+      run: mkdir out
+      shell: bash
+
     - name: Build ISO
       run: >
         docker run --privileged
