@@ -18,5 +18,6 @@ smartmontools
 texinfo
 vim
 yadm
+zsh
 zfs-dkms
 zfs-utils
