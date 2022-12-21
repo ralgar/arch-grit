@@ -6,6 +6,7 @@ mountFilesystems() {
     # Important: Re-import the pool after prior export
     zpool import -d /dev/disk/by-partlabel -R /mnt zroot -N || return 1
 
+    zfs load-key -a <<<"${CRYPTPASS:?}" || return 1
     # Manually mount the root dataset because it uses canmount=noauto
     zfs mount zroot/ROOT/default || return 1
     zfs mount -a || return 1
