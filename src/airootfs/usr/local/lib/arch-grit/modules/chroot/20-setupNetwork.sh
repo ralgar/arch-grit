@@ -25,11 +25,5 @@ polkit.addRule(function(action, subject) {
 });
 EOF
 
-# Enable printing services
-systemctl enable  avahi-daemon.service || exit 1
-systemctl enable  cups.socket || exit 1
-systemctl disable systemd-resolved.service || exit 1
-sed -i "s/resolve/mdns_minimal [NOTFOUND=return] resolve/" /etc/nsswitch.conf
-
 
 exit 0
