@@ -108,13 +108,24 @@ export libPath='/usr/local/lib/arch-grit'
 case $1 in
     install)
         beginInstallation "${@#install }" ;;
-    decrypt)
-        cryptsetup open /dev/disk/by-partlabel/cryptsystem system || exit 1
-        exit 0 ;;
     mount)
-        mount -t btrfs \
-            -o subvol=@,defaults,x-mount.mkdir,compress-force=zstd,noatime \
-            LABEL=system /mnt || exit 1
+        zpool import -d /dev/disk/by-partlabel -R /mnt zroot -N || exit 1
+        zfs load-key zroot || exit 1
+        zfs mount zroot/ROOT/default || exit 1
+        zfs mount -a || exit 1
+        if [[ -d /sys/firmware/efi/efivars ]] ; then
+            mount LABEL=EFI /mnt/boot || exit 1
+        else
+            mount LABEL=BOOT /mnt/boot || exit 1
+        fi
+        exit 0 ;;
+    umount)
+        sync
+        umount /mnt/boot || exit 1
+        zfs umount -a || exit 1
+        zfs umount zroot/ROOT/default || exit 1
+        zfs unload-key zroot || exit 1
+        zpool export zroot || exit 1
         exit 0 ;;
     *)
         printf "\nInvalid argument [ %s ]. Use [ install ], [ decrypt ] or [ mount ].\n" "${1}"
