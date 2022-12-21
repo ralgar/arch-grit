@@ -1,0 +1,16 @@
+---
+name: Build and Test
+
+on:  # yamllint disable-line rule:truthy
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build ISO image
+        uses: ./.github/actions/build
+        with:
+          artifact_name: arch-grit
