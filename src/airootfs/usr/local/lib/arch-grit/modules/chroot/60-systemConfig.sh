@@ -10,6 +10,12 @@ systemctl enable cpupower.service || exit 1
 systemctl enable paccache.timer || exit 1
 systemctl enable smartd.service || exit 1
 
+# Enable ZFS services and targets
+systemctl enable zfs.target || exit 1
+systemctl enable zfs-import.target || exit 1
+systemctl enable zfs-import-cache.service || exit 1
+systemctl enable zfs-mount.service || exit 1
+
 # Sysctl - Tweaks/optimizations
 echo "kernel.sysrq = 1" > /etc/sysctl.d/80-sysrq.conf || exit 1
 echo "vm.swappiness = 10" > /etc/sysctl.d/90-swappiness.conf || exit 1
