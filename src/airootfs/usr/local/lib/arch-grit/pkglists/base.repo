@@ -12,6 +12,7 @@ man-pages
 networkmanager
 openssh
 pacman-contrib
+polkit
 reflector
 smartmontools
 texinfo
