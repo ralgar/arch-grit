@@ -33,6 +33,7 @@ formatPartitions() {
 
     zfs create -o mountpoint=none zroot/data || return 1
     zfs create -o mountpoint=/home zroot/data/home || return 1
+    zfs create -o mountpoint="/home/${UNAME:?}" "zroot/data/home/${UNAME:?}" || return 1
     zfs create -o mountpoint=/root zroot/data/home/root || return 1
 
     zfs create -o mountpoint=/var -o canmount=off     zroot/var || return 1

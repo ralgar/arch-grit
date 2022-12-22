@@ -16,7 +16,6 @@ done
 useradd -M -G wheel -s /usr/bin/zsh "${UNAME:?}" || exit 1
 echo "${UNAME:?}":"${UPASS:?}" | chpasswd || exit 1
 echo "${UNAME:?} ALL=(ALL) ALL" > /etc/sudoers.d/"${UNAME:?}" || exit 1
-zfs create -o mountpoint="/home/${UNAME:?}" "zroot/data/home/${UNAME:?}" || exit 1
 chmod 700 "/home/${UNAME:?}" || exit 1
 shopt -s dotglob || exit 1
 cp -r /etc/skel/* "/home/${UNAME:?}" || exit 1
