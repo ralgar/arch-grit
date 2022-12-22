@@ -14,9 +14,7 @@ mountFilesystems() {
     # Configure the root filesystem
     zpool set bootfs=zroot/ROOT/default zroot
     zpool set cachefile=/etc/zfs/zroot.cache zroot
-    if [[ ! -d /mnt/etc/zfs ]] ; then
-        mkdir /mnt/etc/zfs || return 1
-    fi
+    mkdir -p /mnt/etc/zfs || return 1
     cp /etc/zfs/zroot.cache /mnt/etc/zfs/zroot.cache
 
     # Mount the boot partition
