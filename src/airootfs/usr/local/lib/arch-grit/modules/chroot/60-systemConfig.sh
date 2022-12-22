@@ -16,6 +16,7 @@ systemctl enable zfs-import.target || exit 1
 systemctl enable zfs-import-cache.service || exit 1
 systemctl enable zfs-mount.service || exit 1
 systemctl enable zfs-trim@zroot.timer || exit 1
+systemctl enable zfs-scrub-weekly@zroot.timer || exit 1
 
 # Sysctl - Tweaks/optimizations
 echo "kernel.sysrq = 1" > /etc/sysctl.d/80-sysrq.conf || exit 1
