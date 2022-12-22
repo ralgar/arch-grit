@@ -13,6 +13,7 @@ jobs:
       image: docker.io/koalaman/shellcheck:v0.9.0
       volumes:
         - ${{ github.workspace }}:/repo
+      options: --entrypoint /bin/sh
     steps:
       - name: Lint 'profiledef.sh'
         run: shellcheck -a src/profiledef.sh
