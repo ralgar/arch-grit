@@ -11,6 +11,14 @@ mountFilesystems() {
     zfs mount zroot/ROOT/default || return 1
     zfs mount -a || return 1
 
+    # Configure the root filesystem
+    zpool set bootfs=zroot/ROOT/default zroot
+    zpool set cachefile=/etc/zfs/zroot.cache zroot
+    if [[ ! -d /mnt/etc/zfs ]] ; then
+        mkdir /mnt/etc/zfs || return 1
+    fi
+    cp /etc/zfs/zroot.cache /mnt/etc/zfs/zroot.cache
+
     # Mount the boot partition
     mkdir /mnt/boot || return 1
     if [[ ${BOOTMODE:?} = UEFI ]] ; then
