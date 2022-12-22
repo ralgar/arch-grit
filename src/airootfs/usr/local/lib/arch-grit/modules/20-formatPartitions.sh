@@ -10,12 +10,11 @@ formatPartitions() {
 
     modprobe zfs || return 1
 
-    # autotrim=on
-
-    zpool create -f -o ashift=12  \
+    zpool create -f               \
+        -o ashift=12              \
+        -o autotrim=on            \
         -O acltype=posixacl       \
         -O atime=off              \
-        -O autotrim=on            \
         -O xattr=sa               \
         -O dnodesize=legacy       \
         -O normalization=formD    \
