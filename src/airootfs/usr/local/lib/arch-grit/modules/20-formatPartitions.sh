@@ -15,6 +15,7 @@ formatPartitions() {
     zpool create -f -o ashift=12  \
         -O acltype=posixacl       \
         -O atime=off              \
+        -O autotrim=on            \
         -O xattr=sa               \
         -O dnodesize=legacy       \
         -O normalization=formD    \
