@@ -44,6 +44,7 @@ line_() {
 }
 # For calling a fixed length line for log files
 #  in case script run in background. Function same as above.
+# shellcheck disable=SC2183
 line_log() {
     printf "\n%90s\n" | tr ' ' = >> "$log"
     if [[ -n $1 ]] ; then
@@ -103,7 +104,7 @@ yesorno() {
 # See log settings at top of script
 log="$LOG_DIR/$(basename -s .sh "$0").log"
 run() {
-	eval "$@" &> "$temp" &
+	"$@" &> "$temp" &
 	run_pid=$!
 	while [[ -d /proc/"$run_pid" ]] ; do
 		printf "[      ]  $desc\r" ; sleep .75

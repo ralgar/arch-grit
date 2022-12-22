@@ -23,7 +23,7 @@ driveSelect() {
         # Choose partition size
         setterm -cursor on
         printf "\n${bld}${yel}Enter the size of the ROOT partition, or enter '0' to use all available space.${off}\n"
-        read -p "Size (in GiB): " ROOTSIZE
+        read -rp "Size (in GiB): " ROOTSIZE
         setterm -cursor off
         DRIVESIZE=$(fdisk -lo Size "$DRIVE" | grep "Disk /dev/" | awk '{ print $3 }')
         if [[ ! "$ROOTSIZE" =~ ^[0-9]+$ ]] ; then

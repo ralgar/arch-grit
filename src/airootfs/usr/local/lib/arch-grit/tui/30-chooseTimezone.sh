@@ -15,7 +15,7 @@ chooseTimezone() {
   			    export TZ="$zone"
   			    break
   		  elif [[ -d $zone ]] ; then
-  			    cd $zone
+  			    cd "$zone"
             printf "\n\n"
             PS3="Select SUBZONE: "
   			    select subzone in * "Go Back" ; do

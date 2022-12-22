@@ -17,7 +17,13 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Lint 'profiledef.sh'
-        run: shellcheck -a src/profiledef.sh
+        run: shellcheck src/profiledef.sh
+
+      - name: Lint Arch-GRIT core (all sourced modules)
+        run: shellcheck -xa src/airootfs/usr/local/bin/arch-grit
+
+      - name: Lint chroot modules
+        run: shellcheck src/airootfs/usr/local/lib/arch-grit/modules/chroot/*
 
   build:
     needs: lint

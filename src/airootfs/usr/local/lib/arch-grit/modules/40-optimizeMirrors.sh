@@ -17,8 +17,7 @@ optimizeMirrors() {
         printf "[ ...  ]  $desc\r" ; sleep .75
         printf "[ .... ]  $desc\r" ; sleep .75
     done
-    wait $run_pid
-    if [[ $? = 0 ]] ; then
+    if wait $run_pid ; then
         printf "[  ${bld}${grn}OK${off}  ]  $desc\n"
     else
         printf "[ ${bld}${yel}WARN${off} ]  Failed to optimize the mirrorlist. Attempting to continue anyway...\n"
