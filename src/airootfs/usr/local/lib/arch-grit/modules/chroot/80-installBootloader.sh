@@ -8,7 +8,7 @@ uefiBootConfig() {
 
     cmdline_key="GRUB_CMDLINE_LINUX_DEFAULT" || return 1
     cmdline_val="quiet splash loglevel=3" || return 1
-    sed -i "s/^$cmdline_key.*$/$cmdline_key=$cmdline_val/" /etc/default/grub || return 1
+    sed -i "s/^$cmdline_key.*$/$cmdline_key=\"$cmdline_val\"/" /etc/default/grub || return 1
     grub-mkconfig -o /boot/grub/grub.cfg || return 1
 }
 
@@ -18,7 +18,7 @@ biosBootConfig() {
 
     cmdline_key="GRUB_CMDLINE_LINUX_DEFAULT" || return 1
     cmdline_val="quiet splash loglevel=3" || return 1
-    sed -i "s/^$cmdline_key.*$/$cmdline_key=$cmdline_val/" /etc/default/grub || return 1
+    sed -i "s/^$cmdline_key.*$/$cmdline_key=\"$cmdline_val\"/" /etc/default/grub || return 1
     grub-mkconfig -o /boot/grub/grub.cfg || return 1
 }
 
