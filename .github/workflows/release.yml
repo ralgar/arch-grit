@@ -5,6 +5,8 @@ on:  # yamllint disable-line rule:truthy
   push:
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
+  schedule:
+    - cron: '0 0 * * *'
 
 jobs:
   build:
@@ -12,6 +14,11 @@ jobs:
     steps:
       - name: Checkout codebase
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Checkout latest chronological tag
+        run: git checkout "$(git rev-list --tags --max-count=1)"
 
       - name: Build ISO image
         uses: ./.github/actions/build
