@@ -18,10 +18,10 @@ sudo -u "${UNAME:?}" makepkg -si --noconfirm || exit 1
 cd .. || exit 1
 rm -rf paru-bin || exit 1
 
-# for list in "${libPath:?}"/pkglists/*.aur ; do
-#     # Install AUR packages from pkglistAUR.txt
-#     sudo -u "${UNAME:?}" xargs -a "$list" paru -S --needed --noconfirm || exit 1
-# done
+for list in "${libPath:?}"/pkglists/*.aur ; do
+    # Install AUR packages from pkglistAUR.txt
+    sudo -u "${UNAME:?}" xargs -a "$list" paru -S --needed --noconfirm || exit 1
+done
 
 # Return user's sudo settings to normal
 echo "${UNAME:?} ALL=(ALL) ALL" > /etc/sudoers.d/"${UNAME:?}" || exit 1
