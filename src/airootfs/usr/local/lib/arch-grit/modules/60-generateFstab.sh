@@ -8,5 +8,5 @@ generateFstab() {
     [[ -f /etc/zfs/zpool.cache ]] || zpool set cachefile=/etc/zfs/zpool.cache zroot
     cp /etc/zfs/zpool.cache /mnt/etc/zfs/zpool.cache
 
-    genfstab -f /boot -U /mnt > /mnt/etc/fstab
+    genfstab -f /mnt/boot -U /mnt > /mnt/etc/fstab
 }
