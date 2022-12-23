@@ -3,7 +3,7 @@
 ######################################
 systemBootstrap() {
     # Bootstrap packages using the defined pkglists
-    for list in "${libPath}"/pkglists/base.repo ; do
+    for list in "${libPath}"/pkglists/*.repo ; do
         xargs -a "$list" pacstrap /mnt || return 1
     done
 
