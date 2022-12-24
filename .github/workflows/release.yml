@@ -6,7 +6,7 @@ on:  # yamllint disable-line rule:truthy
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 0 1 * *'
 
 jobs:
   build:
@@ -38,3 +38,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: '*'
+          allowUpdates: true
+          artifactErrorsFailBuild: true
+          omitBody: true
+          removeArtifacts: true
