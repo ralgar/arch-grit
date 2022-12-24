@@ -11,7 +11,6 @@ printf "${bld}${red}### ${pur}Beginning Installation ${red}###${off}\n\n"
 ##############################
 
 # Source the libraries
-. "${libPath}/modules/00-secureErase.sh"
 . "${libPath}/modules/10-partitionDrive.sh"
 . "${libPath}/modules/20-formatPartitions.sh"
 . "${libPath}/modules/30-mountFilesystems.sh"
@@ -19,14 +18,6 @@ printf "${bld}${red}### ${pur}Beginning Installation ${red}###${off}\n\n"
 . "${libPath}/modules/50-systemBootstrap.sh"
 . "${libPath}/modules/60-generateFstab.sh"
 . "${libPath}/modules/99-unmountFilesystems.sh"
-
-# Securely erase the drive
-desc="Securely erasing ${DRIVE}"
-if [[ $eraseDrive == 1 ]] ; then
-    run secureErase "${DRIVE:?}"
-else
-    printf "[ ${bld}${yel}WARN${off} ]  Skipping secure drive erase...\n"
-fi
 
 # Partition the drive
 desc="Partitioning ${DRIVE}"
