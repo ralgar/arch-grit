@@ -1,0 +1,15 @@
+[Trigger]
+Operation = Upgrade
+Operation = Install
+Operation = Remove
+Type = Package
+Target = *
+
+[Action]
+Description = Create a ZFS snapshot before Pacman transactions
+Depends = zfs
+Depends = zfs-utils
+When = PreTransaction
+Exec = /usr/share/libalpm/scripts/zfs-snapshot --bootfs
+NeedsTargets
+AbortOnFail

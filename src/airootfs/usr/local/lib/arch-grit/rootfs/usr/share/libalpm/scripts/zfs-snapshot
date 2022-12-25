@@ -1,0 +1,64 @@
+#!/bin/bash
+
+create_snapshot() {
+    arg="$1"
+    echo "==> Creating snapshot: $arg"
+    if ! zfs snapshot "$arg" ; then
+        echo "==> ERROR: Could not create snapshot!"
+    fi
+    echo "==> Done!"
+}
+
+get_bootfs() {
+    bootfs="$(zpool get bootfs -o value -pH)" || return 1
+    if [[ -z $bootfs ]] ; then
+        echo "==> ERROR: Could not determine root dataset!"
+        return 1
+    fi
+}
+
+get_mountpoint() {
+    while read -r line ; do
+        if [[ $(awk '{print $2}' <<<"$line") == "$1" ]] ; then
+            mountpoint="$(awk '{print $1}' <<<"$line")"
+        fi
+    done < <(zfs list -Ho name,mountpoint) || return 1
+
+    if [[ -z $mountpoint ]] ; then
+        echo "==> ERROR: Could not find a dataset that corresponds to '$1'!"
+        return 1
+    fi
+}
+
+get_snapshot_name() {
+    if ! snapshot_name="pacman-$(date +%s)" ; then
+        echo "==> ERROR: Could not generate a valid snapshot name!"
+        return 1
+    fi
+}
+
+main() {
+    args=("$@")
+    for i in "${!args[@]}" ; do
+        case ${args[$i]} in
+            "--bootfs")
+                get_bootfs || return 1
+                get_snapshot_name || return 1
+                create_snapshot "$bootfs@$snapshot_name" || return 1
+                ;;
+            "--dataset")
+                get_snapshot_name || return 1
+                create_snapshot "${args[$i+1]}@$snapshot_name" || return 1
+                ;;
+            "--mountpoint")
+                get_mountpoint "${args[$i+1]}" || return 1
+                get_snapshot_name || return 1
+                create_snapshot "$mountpoint@$snapshot_name" || return 1
+                ;;
+        esac
+    done
+}
+
+if ! main "$@" ; then
+    exit 1
+fi
