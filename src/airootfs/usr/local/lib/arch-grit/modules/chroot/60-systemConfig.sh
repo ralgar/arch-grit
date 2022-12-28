@@ -2,11 +2,12 @@
 
 trap "exit 1" 1 2 3 SIGTRAP 6 14 15
 
+# shellcheck disable=SC2154
+cp -ar "${libPath}"/rootfs/* / || return 1
+chmod 755 /usr/share/libalpm/scripts/zfs-snapshot || return 1
+
 # Enable system services
 systemctl enable cpupower.service || exit 1
-# if [[ $SSD = 1 && $TRIM = 1 ]] ; then
-#  	  systemctl enable fstrim.timer || exit 1
-# fi
 systemctl enable paccache.timer || exit 1
 systemctl enable smartd.service || exit 1
 
