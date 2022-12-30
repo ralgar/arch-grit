@@ -2,14 +2,30 @@
 ###   LIBRARY - FORMAT PARTITIONS   ###
 #######################################
 formatPartitions() {
-    # Wait until udev updates the partlabels (required)
-    until [[ -e /dev/disk/by-partlabel/cryptsystem ]] ; do
-        sleep 1
+    # Wait for udev to update partition labels
+    for label in BOOT cryptsystem ; do
+        until [[ -e /dev/disk/by-partlabel/$label ]] ; do
+            sleep 1
+        done
     done
     sleep 5
 
-    modprobe zfs || return 1
+    # Ensure we get a valid ID
+    prefix_allowlist=('ata' 'nvme' 'scsi' 'virtio')
+    for entry in /dev/disk/by-id/* ; do
+        for prefix in "${prefix_allowlist[@]}" ; do
+            [[ ${entry##*/} =~ ^$prefix- ]] && break
+        done
+        if [[ $(readlink -f "$entry") == "${DRIVE:?}" ]] ; then
+            if [[ ${BOOTMODE:?} = UEFI ]] ; then
+                zroot_id="$entry-part2"
+            else
+                zroot_id="$entry-part3"
+            fi
+        fi
+    done
 
+    modprobe zfs || return 1
     zpool create -f               \
         -o ashift=12              \
         -o autotrim=on            \
@@ -26,7 +42,7 @@ formatPartitions() {
         -O keyformat=passphrase   \
         -O keylocation=prompt     \
         -R /mnt                   \
-        zroot /dev/disk/by-partlabel/cryptsystem <<<"${CRYPTPASS:?}" || return 1
+        zroot "${zroot_id:?}" <<<"${CRYPTPASS:?}" || return 1
 
     zfs create -o mountpoint=none zroot/ROOT || return 1
     zfs create -o mountpoint=/ -o canmount=noauto zroot/ROOT/default || return 1
