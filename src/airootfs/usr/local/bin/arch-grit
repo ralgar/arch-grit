@@ -135,7 +135,7 @@ case $1 in
         zpool export zroot || exit 1
         exit 0 ;;
     *)
-        printf "\nInvalid argument [ %s ]. Use [ install ], [ decrypt ] or [ mount ].\n" "${1}"
+        printf "\nInvalid argument [ %s ]. Use [ install ], [ mount ] or [ umount ].\n" "${1}"
         exit 1 ;;
 esac
 

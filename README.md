@@ -9,9 +9,9 @@
 Arch Graphical Recovery and Installation Tool (Arch-GRIT) - a live, graphical
  Arch Linux ISO, with my custom installer written in Bash.
 
-This is a project with only one goal - easy redeployment of my personal Arch
- installation. The system is highly opinionated, and primarily designed for
- power users such as sysadmins and developers.
+This is a project with only one goal - easy redeployment of my opinionated Arch
+ Linux minimal system configuration, which is primarily designed for the needs
+ of power users such as sysadmins and developers.
 
 ![Project Screenshot](images/screenshot.png)
 
@@ -63,15 +63,42 @@ To build the ISO, you will need an existing Arch Linux system with the
 
 ## Usage
 
-To write the ISO to a USB drive, follow the instructions provided by the [Arch Linux Project](https://wiki.archlinux.org/title/USB_flash_installation_medium).
+### Booting the live system
 
-Boot from the live USB. The bootloader will present you with two options. If your system has sufficient RAM (at least 4GB), then I recommend choosing the `Copy to RAM` option for best performance. Otherwise, choose the default option.
+1. To write the ISO to a USB drive, follow the instructions provided by the
+   [Arch Linux Project](https://wiki.archlinux.org/title/USB_flash_installation_medium).
+2. Boot from the live USB. The bootloader will present you with two options.
+   If your system has sufficient RAM (at least 4GB), then I recommend choosing
+   the `Copy to RAM` option. Otherwise, choose the default option.
+3. When the live system has finished booting, it will automatically log in and
+   launch a terminal window. The live environment is very similar to the final
+   product, so this is a good opportunity to test it out before committing to
+   a permanent installation.
 
-When the live system has finished booting, it will automatically log in and launch a terminal window. The live environment is nearly identical to the final product, so this is a good opportunity to test it out before committing to a permanent installation.<br>
+### Navigating the live system
 
-You can use the `arch-grit` command to accomplish several tasks, most notably installing a new system. It also provides some helper functions for system recovery purposes, such as decrypting and mounting an existing Arch-GRIT system.<br>
-To learn more about the command run `arch-grit --help`.<br>
-Note: Root privileges are required to run `arch-grit`, you can elevate the default user's privilege using `sudo` and the password `archlinux`
+There are a few keyboard shortcuts that are important to know:
+
+| Key Combo         | Description                          |
+|-------------------|--------------------------------------|
+| Super + 1-9       | Switch workspaces.                   |
+| Super + Enter     | Opens a new terminal window.         |
+| Super + E         | Opens the app launcher.              |
+| Super + Q         | Closes the currently focused window. |
+| Super + Shift + Q | Ends the current session (logout).   |
+
+**Note:** The default user is unprivileged. You can gain root privileges by
+ using `sudo` with the password `archlinux`.
+
+### Using the arch-grit command
+
+The `arch-grit` command is simple to use, and interactive in nature:
+
+| Invocation          | Description                                      |
+|---------------------|--------------------------------------------------|
+| `arch-grit install` | Starts the interactive installer.                |
+| `arch-grit mount`   | Mounts an existing system for recovery purposes. |
+| `arch-grit umount`  | Umounts a previously mounted system.             |
 
 ## License
 
