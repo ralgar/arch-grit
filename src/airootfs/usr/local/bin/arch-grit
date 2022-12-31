@@ -116,7 +116,7 @@ case $1 in
     install)
         beginInstallation "${@#install }" ;;
     mount)
-        zpool import -d /dev/disk/by-partlabel -R /mnt zroot -N || exit 1
+        zpool import -d /dev/disk/by-id -R /mnt zroot -N || exit 1
         zfs load-key zroot || exit 1
         zfs mount zroot/ROOT/default || exit 1
         zfs mount -a || exit 1
