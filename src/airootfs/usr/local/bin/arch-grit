@@ -45,12 +45,6 @@ DEBUG=0			      # 0 = off, 1 = on
 #  run [cmd]	#  For smart output / error-checking / debugging / logging
 		 #  See "MAIN FUNCTION SETTINGS" above
 
-###################################
-###   Source the main library   ###
-###################################
-# shellcheck source=SCRIPTDIR/../lib/bash/interactive.sh
-. /usr/local/lib/bash/interactive.sh
-
 ####################################################################################
 #####	START OF SCRIPT
 ####################################################################################
@@ -114,6 +108,8 @@ export libPath='/usr/local/lib/arch-grit'
 
 case $1 in
     install)
+        # shellcheck source=SCRIPTDIR/../lib/bash/interactive.sh
+        source /usr/local/lib/bash/interactive.sh
         beginInstallation "${@#install }" ;;
     mount)
         zpool import -d /dev/disk/by-id -R /mnt zroot -N || exit 1
@@ -135,7 +131,7 @@ case $1 in
         zpool export zroot || exit 1
         exit 0 ;;
     *)
-        printf "\nInvalid argument [ %s ]. Use [ install ], [ mount ] or [ umount ].\n" "${1}"
+        printf "\nInvalid subcommand '%s'. Use 'install', 'mount' or 'umount'.\n" "${1}"
         exit 1 ;;
 esac
 
