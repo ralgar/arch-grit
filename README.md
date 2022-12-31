@@ -27,18 +27,24 @@ This is a project with only one goal - easy redeployment of my opinionated,
   - [x] Handles a variety of hardware configurations
   - [x] Delivers a fully functional system
 - [x] **Installed system**
-  - [x] Uses ZFS for data integrity
-  - [x] Dataset encryption by default
+  - [x] Uses ZFS for data security and integrity
+    - [x] Native encryption enabled by default (at the zpool level)
+    - [x] LZ4 compression enabled by default (at the zpool level)
+    - [x] Pairs `linux-lts` with `zfs-dkms` for maximum reliability
+    - [x] Automatic snapshots before all `pacman` transactions
+    - [x] Automatic, weekly scrubs
+    - [x] Automatic TRIM/discard on supported devices
+    - [x] Uses `atime=off` for best performance
   - [x] Uses smartd for disk health monitoring
   - [x] Firewalld enabled by default
 
 ## Getting Started
 
 There are two ways to use this project:
-1. Build it from source with the [instructions below](#prerequisites), before
-   continuing on to [Usage](#usage)
-2. Download the [latest pre-built ISO](https://github.com/ralgar/arch-grit/releases)
+1. Download the [latest pre-built ISO](https://github.com/ralgar/arch-grit/releases)
    and write it to a USB drive, following the instructions in [Usage](#usage)
+1. Build it from source with the [instructions below](#building), before
+   continuing on to [Usage](#usage)
 
 ### Building
 
@@ -92,7 +98,7 @@ There are a few keyboard shortcuts that are important to know:
 
 ### Using the arch-grit command
 
-The `arch-grit` command is simple to use, and interactive in nature:
+The `arch-grit` command is simple to use:
 
 | Invocation          | Description                                      |
 |---------------------|--------------------------------------------------|
