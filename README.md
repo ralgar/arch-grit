@@ -9,18 +9,19 @@
 Arch Graphical Recovery and Installation Tool (Arch-GRIT) - a live, graphical
  Arch Linux ISO, with my custom installer written in Bash.
 
-This is a project with only one goal - easy redeployment of my opinionated Arch
- Linux minimal system configuration, which is primarily designed for the needs
- of power users such as sysadmins and developers.
+This is a project with only one goal - easy redeployment of my opinionated,
+ minimal Arch Linux system configuration, which is primarily designed for the
+ needs of power users such as sysadmins and developers.
 
 ![Project Screenshot](images/screenshot.png)
 
 ### Features
 
-- [x] **Live system**
+- [x] **Live system / ISO**
   - [x] Full graphical environment
   - [x] High compatibility
   - [x] Wide variety of useful tools
+  - [x] Automatic rebuilds on the first day of the month
 - [x] **TUI installer**
   - [x] Takes user input
   - [x] Handles a variety of hardware configurations
@@ -30,7 +31,6 @@ This is a project with only one goal - easy redeployment of my opinionated Arch
   - [x] Dataset encryption by default
   - [x] Uses smartd for disk health monitoring
   - [x] Firewalld enabled by default
-  - [x] Follows principle of least privilege
 
 ## Getting Started
 
