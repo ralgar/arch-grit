@@ -3,10 +3,8 @@
 #######################################
 formatPartitions() {
     # Wait for udev to update partition labels
-    for label in BOOT cryptsystem ; do
-        until [[ -e /dev/disk/by-partlabel/$label ]] ; do
-            sleep 1
-        done
+    until [[ -e /dev/disk/by-partlabel/cryptsystem ]] ; do
+        sleep 1
     done
     sleep 5
 
