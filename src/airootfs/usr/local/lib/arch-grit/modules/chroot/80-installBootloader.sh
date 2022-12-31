@@ -3,7 +3,8 @@
 trap "exit 1" 1 2 3 SIGTRAP 6 14 15
 
 uefiBootConfig() {
-    grub-install --target=x86_64-efi --efi-directory=esp --bootloader-id=GRUB || return 1
+    local efi="/boot/EFI"
+    grub-install --target=x86_64-efi --efi-directory="$efi" --bootloader-id=GRUB || return 1
 
     cmdline_key="GRUB_CMDLINE_LINUX_DEFAULT" || return 1
     cmdline_val="quiet splash loglevel=3" || return 1
