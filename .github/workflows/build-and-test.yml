@@ -1,0 +1,38 @@
+---
+name: Build and Test
+
+on:  # yamllint disable-line rule:truthy
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install shellcheck
+        run: sudo apt install -y shellcheck
+
+      - name: Checkout codebase
+        uses: actions/checkout@v3
+
+      - name: Lint 'profiledef.sh'
+        run: shellcheck src/profiledef.sh
+
+      - name: Lint Arch-GRIT core (all sourced modules)
+        run: shellcheck -xa src/airootfs/usr/local/bin/arch-grit
+
+      - name: Lint chroot modules
+        run: shellcheck src/airootfs/usr/local/lib/arch-grit/modules/chroot/*
+
+  build:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout codebase
+        uses: actions/checkout@v3
+
+      - name: Build ISO image
+        uses: ./.github/actions/build
+        with:
+          artifact_name: arch-grit

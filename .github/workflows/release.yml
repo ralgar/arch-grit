@@ -1,0 +1,44 @@
+---
+name: Release
+
+on:  # yamllint disable-line rule:truthy
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+  schedule:
+    - cron: '0 0 1 * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout codebase
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Checkout latest chronological tag
+        run: git checkout "$(git rev-list --tags --max-count=1)"
+
+      - name: Build ISO image
+        uses: ./.github/actions/build
+        with:
+          artifact_name: arch-grit
+
+  create-release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: arch-grit
+
+      - name: Create release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: '*'
+          allowUpdates: true
+          artifactErrorsFailBuild: true
+          omitBody: true
+          removeArtifacts: true
