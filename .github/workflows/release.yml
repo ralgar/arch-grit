@@ -11,14 +11,22 @@ on:  # yamllint disable-line rule:truthy
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      latest_tag: ${{ steps.get_tag.outputs.tag }}
     steps:
       - name: Checkout codebase
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
+      - name: Determine latest chronological tag
+        id: get_tag
+        run: >
+          echo "latest_tag=$(git rev-list --tags --max-count=1)" |
+          tee -a $GITHUB_OUTPUT $GITHUB_ENV
+
       - name: Checkout latest chronological tag
-        run: git checkout "$(git rev-list --tags --max-count=1)"
+        run: git checkout "${{ env.latest_tag }}"
 
       - name: Build ISO image
         uses: ./.github/actions/build
@@ -42,3 +50,4 @@ jobs:
           artifactErrorsFailBuild: true
           omitBody: true
           removeArtifacts: true
+          tag: ${{ needs.build.outputs.latest_tag }}
