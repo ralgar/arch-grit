@@ -19,7 +19,7 @@ case ${VDRV:?} in
 		;;
 	"NVIDIA Proprietary")
 		pacman -S --noconfirm nvidia-dkms lib32-nvidia-utils || exit 1
-		sed -i "s/MODULES=()/MODULES=(nvidia nvidia_drm)/" /etc/mkinitcpio.conf || exit 1
+		sed -i "s/MODULES=()/MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/" /etc/mkinitcpio.conf || exit 1
 		#if [[ $BOOTMODE = UEFI ]] ; then
 		#	sed -i "s/quiet/nvidia-drm.modeset=1 quiet/" /boot/refind_linux.conf || exit 1
 		#elif [[ $BOOTMODE = BIOS ]] ; then

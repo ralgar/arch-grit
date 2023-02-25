@@ -27,7 +27,4 @@ echo "fs.inotify.max_user_watches = 600000" > /etc/sysctl.d/99-max_user_watches.
 # Set user in sshd - the daemon is not enabled by default
 sed -i "s/my_user/${UNAME:?}/" /etc/ssh/sshd_config || exit 1
 
-# Set MAIN_USER variable for system tasks - like popup notifications
-echo "export MAIN_USER=${UNAME:?}" >> /root/.config/zsh/.zshenv || exit 1
-
 exit 0
