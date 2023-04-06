@@ -10,7 +10,7 @@ create_snapshot() {
 }
 
 get_bootfs() {
-    bootfs="$(zpool get bootfs -o value -pH)" || return 1
+    bootfs="$(zpool get bootfs -o value -pH zroot)" || return 1
     if [[ -z $bootfs ]] ; then
         echo "==> ERROR: Could not determine root dataset!"
         return 1
