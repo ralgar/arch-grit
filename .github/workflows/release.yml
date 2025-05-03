@@ -7,6 +7,7 @@ on:  # yamllint disable-line rule:truthy
       - 'v[0-9]+.[0-9]+.[0-9]+'
   schedule:
     - cron: '0 0 1 * *'
+  workflow_dispatch:
 
 jobs:
   build:
@@ -19,11 +20,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Determine latest chronological tag
+      - name: Determine latest semver tag
         id: get_tag
-        run: >
-          echo "latest_tag=$(git rev-list --tags --max-count=1)" |
-          tee -a $GITHUB_OUTPUT $GITHUB_ENV
+        run: |
+          latest_tag="$(git tag -l 'v[0-9]*.[0-9]*.[0-9]*' | sort -V | tail -n 1)"
+          echo "latest_tag=$latest_tag" >> $GITHUB_OUTPUT
+          echo "latest_tag=$latest_tag" >> $GITHUB_ENV
 
       - name: Checkout latest chronological tag
         run: git checkout "${{ env.latest_tag }}"
