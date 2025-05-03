@@ -71,7 +71,6 @@ ppp
 pptpclient
 pv
 reflector
-reiserfsprogs
 rp-pppoe
 rsync
 sdparm
@@ -120,4 +119,3 @@ rofi
 xorg-drivers
 xorg-server
 xorg-xinit
-zsh-theme-powerlevel10k
